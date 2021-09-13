@@ -1,13 +1,6 @@
 document.querySelector('body').addEventListener('keydown', (event) => {
     if (event.keyCode == 32) {
-        verifcar()
-    }
-    if(event.keyCode == 81){
-            if(valorTotal >= metaSem ){
-                document.getElementById('mesesFeitos').innerHTML = `A meta da semana foi cumprida`;
-            }else{
-                document.getElementById('mesesFeitos').innerHTML = `A meta da semana nao foi cumprida`;
-            }
+        verificar()
     }
 })
 
@@ -21,14 +14,13 @@ document.getElementById('addMeta').addEventListener('click', () => {
         metaSem = m;
         document.getElementById('meta').value = "";
         document.getElementById('meta').focus();
-        console.log(metaSem)
         document.getElementById('metaS').innerHTML = `A sua meta é ${metaSem}`;
-    }else{
+    } else {
         alert('Adicione um valor no campo');
         document.getElementById('meta').focus();
     }
 })
-function verifcar() {
+function verificar() {
     document.getElementById('valor').focus();
     let hrs = parseFloat(document.getElementById('valor').value);
     if (hrs) {
@@ -37,22 +29,33 @@ function verifcar() {
         if (temp >= 6) {
             document.getElementById(`${temp}`).innerHTML = `Ex: ${hrs}`;
             soma()
+            exibir()
         } else {
             temp++
             document.getElementById(`${temp}`).innerHTML = `Daqui 2 segs`;
             setTimeout(() => {
-            document.getElementById(`${temp}`).innerHTML = `<input type="number" name="number" id="valor">`;
-            document.getElementById('valor').focus();
-            }, 3000);
+                document.getElementById(`${temp}`).innerHTML = `<input type="number" name="number" id="valor">`;
+                document.getElementById('valor').focus();
+            }, 2000);
         }
     } else {
         alert('adicione um numero no campo');
         document.getElementById('valor').focus();
     }
 }
-function soma(){
-    valoresSem.forEach((item, index, array)=>{
-        valorTotal += item      
+function soma() {
+    valoresSem.forEach((item, index, array) => {
+        valorTotal += item
     })
 }
-
+function exibir(){
+    if (metaSem != 0) {
+        if (valorTotal >= metaSem) {
+            document.getElementById('mesesFeitos').innerHTML = `A meta da semana foi cumprida`;
+        } else {
+            document.getElementById('mesesFeitos').innerHTML = `A meta da semana nao foi cumprida`;
+        }
+    }else{
+        document.getElementById('mesesFeitos').innerHTML = `Você fez ${valorTotal} hrs !!`;
+    }
+}
